@@ -1,0 +1,347 @@
+<template>
+  <flexbox align="stretch">
+    <flexbox-item style="margin-right: 50px;">
+
+<!--      <div class="area-title">详细地址</div>-->
+      <el-input v-model="detailAddress"
+                placeholder=""></el-input>
+
+  <!--    <el-amap-search-box class="search-box" :on-search-result="GDonSearchResult"></el-amap-search-box>
+      <el-amap vid="amap" :plugin="plugin" :events="events" class="amap" :center="center" :zoom="zoom">
+        <el-amap-marker :position="center" vid="amapMarker"></el-amap-marker>
+      </el-amap>-->
+      <el-amap-search-box class="search-box"
+                          :search-option="searchOption"
+                          :on-search-result="onSearchResult"></el-amap-search-box>
+      <el-amap vid="amap" :center="mapCenter" :zoom="12" class="amap">
+<!--        <el-amap-marker v-for="(marker, index) in markers" :position="marker" :key="index"></el-amap-marker>-->
+      </el-amap>
+    </flexbox-item>
+<!--    <flexbox-item>
+      <div class="area-title">省/市/区</div>
+      <v-distpicker :province="addressSelect.province"
+                    :city="addressSelect.city"
+                    :area="addressSelect.area"
+                    @province="selectProvince"
+                    @city="selectCity"
+                    @area="selectArea"></v-distpicker>
+    </flexbox-item>-->
+
+  </flexbox>
+</template>
+<script type="text/javascript">
+import VDistpicker from 'v-distpicker'
+export default {
+  name: 'xh-customer-address', // 新建 客户位置
+  components: {
+    VDistpicker
+  },
+  computed: {},
+  watch: {
+    pointAddress: function(newValue) {
+      this.valueChange()
+    },
+    detailAddress: function(newValue) {
+      this.valueChange()
+    }
+  },
+  data() {
+    return {
+      map: null,
+      /** 搜索地图输入框 */
+      searchInput: '',
+      searchCopyInput: '', // 避免修改
+      /** 完整地址输入框 */
+      detailAddress: '',
+      pointAddress: null, // 经纬度点
+      /** 区域选择 */
+      addressSelect: {
+        province: '',
+        city: '',
+        area: ''
+      },
+      /** 防止联动情况  */
+      canExecute: true,
+
+
+      //高德
+      markers: [
+        [121.59996, 31.197646],
+        [121.40018, 31.197622],
+        [121.69991, 31.207649]
+      ],
+      searchOption: {
+        city: '上海',
+        citylimit: true
+      },
+      mapCenter: [121.59996, 31.197646],
+      // let self = this;
+        nearbyInfo: [], // 周边信息---高德反馈（周边建筑信息）
+        addressInfo: '', // 城市信息---高德反馈（省市区、adcode）
+        center: [114, 33.57], // 高德地图中心点
+        zoom: 10, // 地图缩放
+        events: {
+          'click': (e) => { // 点击地图的时候，获取点击的经纬度，并将地图中心点移自此处
+            let m = e.lnglat;
+            debugger
+            this.addrInput = '';
+            this.center = [m.lng, m.lat];
+            this.GDmapGetInfoOfNearby(m.lng, m.lat, self); // 获取周边信息
+          }
+        },
+        plugin: [
+          {
+            pName: 'Geolocation',
+            noIpLocate: 1, // ios11： 禁止ip定位：ios11之后默认是ip定位，参数为1则是禁止ip定位
+            events: {
+              init: (o) => {
+                self.GDinit(o, self); // 获取当前位置
+              }
+            }
+          }
+        ]
+      };
+  },
+  props: {
+    value: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
+    /** 索引值 用于更新数据 */
+    index: Number,
+    /** 包含数据源 */
+    item: Object
+  },
+  mounted() {
+
+
+  },
+  methods: {
+    addMarker: function() {
+      let lng = 121.5 + Math.round(Math.random() * 1000) / 10000;
+      let lat = 31.197646 + Math.round(Math.random() * 500) / 10000;
+      this.markers.push([lng, lat]);
+    },
+    onSearchResult(pois) {
+      debugger
+      let latSum = 0;
+      let lngSum = 0;
+      if (pois.length > 0) {
+        pois.forEach(poi => {
+          let { lng, lat } = poi;
+          lngSum += lng;
+          latSum += lat;
+          this.markers.push([poi.lng, poi.lat]);
+        });
+        let center = {
+          lng: lngSum / pois.length,
+          lat: latSum / pois.length
+        };
+        this.mapCenter = [center.lng, center.lat];
+      }
+    },
+    /* 搜索结果回调函数 */
+    GDonSearchResult (e) {
+      console.log(e);
+      this.center = [e.lng, e.lat];
+      this.GDmapGetInfoOfNearby(e[0].lng, e[0].lat, this);
+    },
+    /* 获取周边建筑信息 */
+    GDmapGetInfoOfNearby (lng, lat, self) {
+      // 这里通过高德 SDK 完成。
+      let geocoder = new AMap.Geocoder({
+        radius: 1000,
+        extensions: 'all',
+        poitype: ''
+      });
+      geocoder.getAddress([lng, lat], (status, result) => {
+        if (status === 'complete' && result.info === 'OK') {
+          if (result && result.regeocode) {
+            console.log(result);
+            self.$nextTick();
+          }
+        }
+      });
+    },
+    /* 初始化定位当前位置 */
+    GDinit (o, self) {
+      o.getCurrentPosition((status, result) => {
+        console.log(status, result);
+        if (status === 'complete' && result.info === 'SUCCESS') {
+          let lat = result.position.lat;
+          let lng = result.position.lng;
+          self.center = [lng, lat];
+          self.GDmapGetInfoOfNearby(lng, lat, self); // 获取周边信息
+        }
+      });
+    },
+    initInfo(val) {
+      this.searchInput = val.location
+      this.detailAddress = val.detailAddress
+      if (Object.prototype.toString.call(val.address) == '[object Array]') {
+        var address = {}
+        for (let index = 0; index < val.address.length; index++) {
+          index === 0 ? (address['province'] = val.address[0]) : ''
+          index === 1 ? (address['city'] = val.address[1]) : ''
+          index === 2 ? (address['area'] = val.address[2]) : ''
+        }
+        this.addressSelect = address
+      }
+      if (val.lng != 0 && val.lat != 0) {
+        this.pointAddress = new BMap.Point(val.lng, val.lat)
+        this.addMarkerLabel(this.pointAddress)
+      }
+    },
+    querySearchAsync(queryString, cb) {
+      if (queryString) {
+        var options = {
+          onSearchComplete: function(results) {
+            if (local.getStatus() == BMAP_STATUS_SUCCESS) {
+              var address = []
+              for (var i = 0; i < results.getCurrentNumPois(); i++) {
+                address.push(results.getPoi(i))
+              }
+              cb(address)
+            } else {
+              cb([])
+            }
+          },
+          pageCapacity: 20
+        }
+        var local = new BMap.LocalSearch(this.map, options)
+        local.search(queryString)
+      } else {
+        cb([])
+      }
+    },
+    /** 搜索结果选择 */
+    handleSelect(item) {
+      this.searchInput = item.address + item.title
+      this.searchCopyInput = this.searchInput // 只能通过这种方式修改
+
+      this.detailAddress = this.searchInput
+      this.addMarkerLabel(item.point)
+      this.pointAddress = item.point
+      this.mapSelectArea(item)
+    },
+    /** Input 失去焦点  searchInput 只能通过选择更改*/
+    inputBlur() {
+      if (this.searchCopyInput !== this.searchInput) {
+        this.searchInput = this.searchCopyInput
+      }
+    },
+    inputFocus() {
+      this.searchCopyInput = this.searchInput
+    },
+    // 创建标注
+    addMarkerLabel(point) {
+      this.map.clearOverlays()
+      this.map.centerAndZoom(point, 14)
+      this.map.addOverlay(new BMap.Marker(point))
+    },
+    /** 区域选择 */
+    selectProvince(value) {
+      this.addressSelect.province = value.value
+      this.valueChange()
+    },
+    selectCity(value) {
+      this.addressSelect.city = value.value
+      this.valueChange()
+    },
+    selectArea(value) {
+      this.addressSelect.area = value.value
+      this.valueChange()
+    },
+    /** 地图选择区域 */
+    mapSelectArea(data) {
+      if (this.canExecute) {
+        this.canExecute = false
+        // this.addressSelect.province = data.province ? data.province : "";
+        // this.addressSelect.city = data.city ? data.city : "";
+        /** 因为poi里面不包含区域 所以需要逆地址解析 */
+        var myGeo = new BMap.Geocoder()
+        // 根据坐标得到地址描述
+        var self = this
+        myGeo.getLocation(
+          new BMap.Point(data.point.lng, data.point.lat),
+          function(result) {
+            if (result) {
+              // 获取经纬度点
+              self.pointAddress = result.point
+              self.addressSelect.province = result.addressComponents.province
+                ? result.addressComponents.province
+                : ''
+              self.addressSelect.city = result.addressComponents.city
+                ? result.addressComponents.city
+                : ''
+              self.addressSelect.area = result.addressComponents.district
+                ? result.addressComponents.district
+                : ''
+            }
+          }
+        )
+
+        setTimeout(() => {
+          self.canExecute = true
+        }, 500)
+      }
+    },
+    // 值更新的回调
+    valueChange() {
+      this.$emit('value-change', {
+        index: this.index,
+        value: {
+          address: [
+            this.addressSelect.province,
+            this.addressSelect.city,
+            this.addressSelect.area
+          ],
+          location: this.searchInput,
+          detailAddress: this.detailAddress,
+          lat: this.pointAddress ? this.pointAddress.lat : '',
+          lng: this.pointAddress ? this.pointAddress.lng : ''
+        }
+      })
+    }
+  }
+}
+
+</script>
+<style rel="stylesheet/scss" lang="scss" scoped>
+
+.search-box {
+  position: absolute;
+  top: 25px;
+  left: 20px;
+}
+
+.amap-page-container {
+  position: relative;
+}
+.map {
+  height: 300px;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 5px;
+}
+.amap {
+  height: 300px;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.area-title {
+  font-size: 12px;
+  color: #aaa;
+  padding-left: 10px;
+}
+
+.distpicker-address-wrapper /deep/ select {
+  height: 34px;
+  font-size: 12px;
+  border-radius: 0.1rem;
+}
+</style>
