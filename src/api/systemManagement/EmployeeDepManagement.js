@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function depDelete(data) {
   return request({
-    url: 'sys/dept/deleteDept',
+    url: 'sys/dept/delete',
     method: 'post',
     data: data
   })
@@ -10,7 +10,7 @@ export function depDelete(data) {
 
 export function depEdit(data) {
   return request({
-    url: 'sys/dept/updateDept',
+    url: 'sys/dept/update',
     method: 'post',
     data: data
   })
@@ -18,7 +18,7 @@ export function depEdit(data) {
 
 export function depSave(data) {
   return request({
-    url: 'sys/dept/addDept',
+    url: 'sys/dept/save',
     method: 'post',
     data: data
   })
