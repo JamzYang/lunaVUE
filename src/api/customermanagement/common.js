@@ -14,7 +14,7 @@ export function filedGetField(data) {
 
 /**
  * 详情页基本信息
- * @param {*} data 
+ * @param {*} data
  */
 export function filedGetInformation(data) {
   return request({
@@ -27,7 +27,7 @@ export function filedGetInformation(data) {
 
 /**
  * 表头
- * @param {*} data 
+ * @param {*} data
  */
 export function filedGetTableField(data) {
   return request({
@@ -66,7 +66,7 @@ export function businessGroupList(data) {
 // 场景列表
 export function crmSceneIndex(data) {
   return request({
-    url: 'scene/queryScene',
+    url: 'sys/scene/list',
     method: 'post',
     data: data
   })
@@ -74,7 +74,7 @@ export function crmSceneIndex(data) {
 // 场景设置列表
 export function crmSceneSetIndex(data) {
   return request({
-    url: 'scene/querySceneConfig',
+    url: 'sys/scene/querySceneConfig',
     method: 'post',
     data: data
   })
@@ -83,7 +83,7 @@ export function crmSceneSetIndex(data) {
 // 场景创建
 export function crmSceneSave(data) {
   return request({
-    url: 'scene/addScene',
+    url: 'sys/scene/save',
     method: 'post',
     data: data
   })
@@ -92,7 +92,7 @@ export function crmSceneSave(data) {
 // 场景编辑
 export function crmSceneUpdate(data) {
   return request({
-    url: 'scene/updateScene',
+    url: 'sys/scene/update',
     method: 'post',
     data: data
   })
@@ -199,7 +199,7 @@ export function crmIndexFieldRecord(data) {
 
 /**
  * 记录类型 数据 与系统设置系统(repeat)
- * @param {*} data 
+ * @param {*} data
  */
 export function crmSettingRecordListAPI(data) {
   return request({

@@ -970,7 +970,7 @@ export default {
       })
         .then(res => {
           this.tableData = res.data.list
-          this.total = res.data.totalRow
+          this.total = res.data.totalCount
           this.loading = false
         })
         .catch(() => {

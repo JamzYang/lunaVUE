@@ -26,7 +26,7 @@ export function depSave(data) {
 
 export function usersEdit(params) {
   return request({
-    url: 'sys/user/setUser',
+    url: 'sys/user/update',
     method: 'post',
     data: params
   })
@@ -34,7 +34,7 @@ export function usersEdit(params) {
 
 export function usersAdd(params) {
   return request({
-    url: 'sys/user/addUser',
+    url: 'sys/user/save',
     method: 'post',
     data: params
   })
