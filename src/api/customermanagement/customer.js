@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // crm 新建客户
 export function crmCustomerSave(data) {
   return request({
-    url: 'CrmCustomer/addOrUpdate',
+    url: 'crm/customer/save',
     method: 'post',
     data: data,
     headers: {
@@ -15,7 +15,7 @@ export function crmCustomerSave(data) {
 // crm 客户列表
 export function crmCustomerIndex(data) {
   return request({
-    url: 'CrmCustomer/queryPageList',
+    url: 'crm/customer/list',
     method: 'post',
     data: data,
     headers: {
@@ -27,7 +27,7 @@ export function crmCustomerIndex(data) {
 // 删除
 export function crmCustomerDelete(data) {
   return request({
-    url: 'CrmCustomer/deleteByIds',
+    url: 'crm/customer/deleteByIds',
     method: 'post',
     data: data
   })
@@ -36,7 +36,7 @@ export function crmCustomerDelete(data) {
 // crm 公海列表
 export function crmCustomerPool(data) {
   return request({
-    url: 'CrmCustomer/queryPoolPageList',
+    url: 'crm/customer/queryPoolPageList',
     method: 'post',
     data: data,
     headers: {
@@ -48,7 +48,7 @@ export function crmCustomerPool(data) {
 // crm 详情
 export function crmCustomerRead(data) {
   return request({
-    url: 'CrmCustomer/queryById',
+    url: 'crm/customer/queryById',
     method: 'post',
     data: data
   })
@@ -61,7 +61,7 @@ export function crmCustomerRead(data) {
  */
 export function crmCustomerLock(data) {
   return request({
-    url: 'CrmCustomer/lock',
+    url: 'crm/customer/lock',
     method: 'post',
     data: data
   })
@@ -74,7 +74,7 @@ export function crmCustomerLock(data) {
  */
 export function crmCustomerPutInPool(data) {
   return request({
-    url: 'CrmCustomer/updateCustomerByIds',
+    url: 'crm/customer/updateCustomerByIds',
     method: 'post',
     data: data
   })
@@ -86,7 +86,7 @@ export function crmCustomerPutInPool(data) {
  */
 export function crmCustomerTransfer(data) {
   return request({
-    url: 'CrmCustomer/transfer',
+    url: 'crm/customer/transfer',
     method: 'post',
     data: data
   })
@@ -99,7 +99,7 @@ export function crmCustomerTransfer(data) {
  */
 export function crmCustomerExcelExport(data) {
   return request({
-    url: 'CrmCustomer/batchExportExcel',
+    url: 'crm/customer/batchExportExcel',
     method: 'post',
     data: data,
     responseType: 'blob'
@@ -108,7 +108,7 @@ export function crmCustomerExcelExport(data) {
 
 export function crmCustomerExcelAllExport(data) {
   return request({
-    url: 'CrmCustomer/allExportExcel',
+    url: 'crm/customer/allExportExcel',
     method: 'post',
     data: data,
     responseType: 'blob',
@@ -129,7 +129,7 @@ export function crmCustomerExcelImport(data) {
     param.append(key, data[key])
   })
   return request({
-    url: 'CrmCustomer/uploadExcel',
+    url: 'crm/customer/uploadExcel',
     method: 'post',
     data: param,
     headers: {
@@ -143,10 +143,10 @@ export function crmCustomerExcelImport(data) {
  * @param {*} data
  *
  */
-export const crmCustomerExcelDownloadURL = process.env.BASE_API + 'CrmCustomer/downloadExcel'
+export const crmCustomerExcelDownloadURL = process.env.BASE_API + 'crm/customer/downloadExcel'
 export function crmCustomerDownloadExcelAPI(data) {
   return request({
-    url: 'CrmCustomer/downloadExcel',
+    url: 'crm/customer/downloadExcel',
     method: 'post',
     data: data,
     responseType: 'blob'
@@ -159,7 +159,7 @@ export function crmCustomerDownloadExcelAPI(data) {
  */
 export function crmCustomerPoolExcelExportAPI(data) {
   return request({
-    url: 'CrmCustomer/poolBatchExportExcel',
+    url: 'crm/customer/poolBatchExportExcel',
     method: 'post',
     data: data,
     responseType: 'blob',
@@ -169,7 +169,7 @@ export function crmCustomerPoolExcelExportAPI(data) {
 
 export function crmCustomerPoolExcelAllExport(data) {
   return request({
-    url: 'CrmCustomer/poolAllExportExcel',
+    url: 'crm/customer/poolAllExportExcel',
     method: 'post',
     data: data,
     responseType: 'blob',
@@ -185,7 +185,7 @@ export function crmCustomerPoolExcelAllExport(data) {
  */
 export function crmCustomerDistribute(data) {
   return request({
-    url: 'CrmCustomer/distributeByIds',
+    url: 'crm/customer/distributeByIds',
     method: 'post',
     data: data
   })
@@ -197,7 +197,7 @@ export function crmCustomerDistribute(data) {
  */
 export function crmCustomerReceive(data) {
   return request({
-    url: 'CrmCustomer/receiveByIds',
+    url: 'crm/customer/receiveByIds',
     method: 'post',
     data: data
   })
@@ -205,11 +205,11 @@ export function crmCustomerReceive(data) {
 
 /**
  * 客户下联系人
- * @param {*} data 
+ * @param {*} data
  */
 export function crmCustomerQueryContacts(data) {
   return request({
-    url: 'CrmCustomer/queryContacts',
+    url: 'crm/customer/queryContacts',
     method: 'post',
     data: data
   })
@@ -217,11 +217,11 @@ export function crmCustomerQueryContacts(data) {
 
 /**
  * 客户下商机
- * @param {*} data 
+ * @param {*} data
  */
 export function crmCustomerQueryBusiness(data) {
   return request({
-    url: 'CrmCustomer/queryBusiness',
+    url: 'crm/customer/queryBusiness',
     method: 'post',
     data: data
   })
@@ -229,11 +229,11 @@ export function crmCustomerQueryBusiness(data) {
 
 /**
  * 客户下合同
- * @param {*} data 
+ * @param {*} data
  */
 export function crmCustomerQueryContract(data) {
   return request({
-    url: 'CrmCustomer/queryContract',
+    url: 'crm/customer/queryContract',
     method: 'post',
     data: data
   })
@@ -241,11 +241,11 @@ export function crmCustomerQueryContract(data) {
 
 /**
  * 客户下回款计划
- * @param {*} data 
+ * @param {*} data
  */
 export function crmCustomerQueryReceivablesPlan(data) {
   return request({
-    url: 'CrmCustomer/queryReceivablesPlan',
+    url: 'crm/customer/queryReceivablesPlan',
     method: 'post',
     data: data
   })
@@ -253,11 +253,11 @@ export function crmCustomerQueryReceivablesPlan(data) {
 
 /**
  * 客户下回款
- * @param {*} data 
+ * @param {*} data
  */
 export function crmCustomerQueryReceivables(data) {
   return request({
-    url: 'CrmCustomer/queryReceivables',
+    url: 'crm/customer/queryReceivables',
     method: 'post',
     data: data
   })
@@ -266,18 +266,18 @@ export function crmCustomerQueryReceivables(data) {
 
 /**
  * 跟进记录
- * @param {*} data 
+ * @param {*} data
  */
 export function crmCustomerRecordSave(data) {
   return request({
-    url: 'CrmCustomer/addRecord',
+    url: 'crm/customer/addRecord',
     method: 'post',
     data: data
   })
 }
 export function crmCustomerRecordIndex(data) {
   return request({
-    url: 'CrmCustomer/getRecord',
+    url: 'crm/customer/getRecord',
     method: 'post',
     data: data
   })
@@ -292,7 +292,7 @@ export function crmCustomerRecordIndex(data) {
  */
 export function crmCustomerSettingTeamSave(data) {
   return request({
-    url: 'CrmCustomer/addMembers',
+    url: 'crm/customer/addMembers',
     method: 'post',
     data: data
   })
@@ -300,7 +300,7 @@ export function crmCustomerSettingTeamSave(data) {
 
 export function crmCustomerSettingTeamDelete(data) {
   return request({
-    url: 'CrmCustomer/deleteMembers',
+    url: 'crm/customer/deleteMembers',
     method: 'post',
     data: data
   })
@@ -308,7 +308,7 @@ export function crmCustomerSettingTeamDelete(data) {
 
 export function crmCustomerTeamMembers(data) {
   return request({
-    url: 'CrmCustomer/getMembers',
+    url: 'crm/customer/getMembers',
     method: 'post',
     data: data
   })
@@ -316,7 +316,7 @@ export function crmCustomerTeamMembers(data) {
 
 export function crmCustomerUpdateMembers(data) {
   return request({
-    url: 'CrmCustomer/updateMembers',
+    url: 'crm/customer/updateMembers',
     method: 'post',
     data: data
   })
@@ -328,7 +328,7 @@ export function crmCustomerUpdateMembers(data) {
  */
 export function crmCustomerQueryListAPI(data) {
   return request({
-    url: 'CrmCustomer/queryList',
+    url: 'crm/customer/queryList',
     method: 'post',
     data: data
   })
@@ -354,7 +354,7 @@ export function crmCustomerSetFollowAPI(data) {
  */
 export function crmCustomerDealStatusAPI(data) {
   return request({
-    url: 'CrmCustomer/setDealStatus',
+    url: 'crm/customer/setDealStatus',
     method: 'post',
     data: data
   })

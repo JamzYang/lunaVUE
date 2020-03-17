@@ -6,7 +6,7 @@ import request from '@/utils/request'
  */
 export function filedGetField(data) {
   return request({
-    url: 'field/queryField',
+    url: 'sys/field/queryField',
     method: 'post',
     data: data
   })
@@ -18,7 +18,7 @@ export function filedGetField(data) {
  */
 export function filedGetInformation(data) {
   return request({
-    url: 'field/information',
+    url: 'sys/field/information',
     method: 'post',
     data: data
   })
@@ -31,7 +31,7 @@ export function filedGetInformation(data) {
  */
 export function filedGetTableField(data) {
   return request({
-    url: 'field/queryListHead',
+    url: 'sys/field/queryListHead',
     method: 'post',
     data: data
   })
@@ -40,7 +40,7 @@ export function filedGetTableField(data) {
 // crm 自定义字段验重
 export function filedValidates(data) {
   return request({
-    url: 'field/verify',
+    url: 'sys/field/verify',
     method: 'post',
     data: data
   })

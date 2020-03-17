@@ -129,7 +129,7 @@ export default {
             this.list = res.data.list
           }
 
-          this.total = res.data.totalRow
+          this.total = res.data.totalCount
 
           this.loading = false
         })
@@ -180,14 +180,12 @@ export default {
               } else {
                 width = element.width
               }
-
               this.fieldList.push({
                 prop: element.fieldName,
                 label: element.name,
                 width: width
               })
             }
-
             // 获取好字段开始请求数据
             this.getList()
           })
@@ -308,7 +306,7 @@ export default {
     },
     /**
      * 导出 线索 客户 联系人 产品
-     * @param {*} data 
+     * @param {*} data
      */
     // 导出操作
     exportInfos() {
@@ -352,7 +350,7 @@ export default {
           window.URL.revokeObjectURL(href) //释放掉blob对象
           loading.close()
         })
-        .catch(() => { 
+        .catch(() => {
           loading.close()
         })
     },

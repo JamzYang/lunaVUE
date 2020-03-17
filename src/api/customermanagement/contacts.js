@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // crm 新建联系人
 export function crmContactsSave(data) {
   return request({
-    url: 'CrmContacts/addOrUpdate',
+    url: 'crm/contacts/addOrUpdate',
     method: 'post',
     data: data,
     headers: {
@@ -15,7 +15,7 @@ export function crmContactsSave(data) {
 // crm 列表
 export function crmContactsIndex(data) {
   return request({
-    url: 'CrmContacts/queryPageList',
+    url: 'crm/contacts/list',
     method: 'post',
     data: data,
     headers: {
@@ -27,7 +27,7 @@ export function crmContactsIndex(data) {
 // 删除
 export function crmContactsDelete(data) {
   return request({
-    url: 'CrmContacts/deleteByIds',
+    url: 'crm/contacts/deleteByIds',
     method: 'post',
     data: data
   })
@@ -36,7 +36,7 @@ export function crmContactsDelete(data) {
 // crm 详情
 export function crmContactsRead(data) {
   return request({
-    url: 'CrmContacts/queryById',
+    url: 'crm/contacts/queryById',
     method: 'post',
     data: data
   })
@@ -48,7 +48,7 @@ export function crmContactsRead(data) {
  */
 export function crmContactsTransfer(data) {
   return request({
-    url: 'CrmContacts/transfer',
+    url: 'crm/contacts/transfer',
     method: 'post',
     data: data
   })
@@ -56,11 +56,11 @@ export function crmContactsTransfer(data) {
 
 /**
  * 联系人下商机
- * @param {*} data 
+ * @param {*} data
  */
 export function crmContactsQueryBusiness(data) {
   return request({
-    url: 'CrmContacts/queryBusiness',
+    url: 'crm/contacts/queryBusiness',
     method: 'post',
     data: data
   })
@@ -68,18 +68,18 @@ export function crmContactsQueryBusiness(data) {
 
 /**
  * 跟进记录
- * @param {*} data 
+ * @param {*} data
  */
 export function crmContactsRecordSave(data) {
   return request({
-    url: 'CrmContacts/addRecord',
+    url: 'crm/contacts/addRecord',
     method: 'post',
     data: data
   })
 }
 export function crmContactsRecordIndex(data) {
   return request({
-    url: 'CrmContacts/getRecord',
+    url: 'crm/contacts/getRecord',
     method: 'post',
     data: data
   })
@@ -93,7 +93,7 @@ export function crmContactsRecordIndex(data) {
  */
 export function crmContactsExcelExport(data) {
   return request({
-    url: 'CrmContacts/batchExportExcel',
+    url: 'crm/contacts/batchExportExcel',
     method: 'post',
     data: data,
     responseType: 'blob'
@@ -102,7 +102,7 @@ export function crmContactsExcelExport(data) {
 
 export function crmContactsExcelAllExport(data) {
   return request({
-    url: 'CrmContacts/allExportExcel',
+    url: 'crm/contacts/allExportExcel',
     method: 'post',
     data: data,
     responseType: 'blob',
@@ -123,7 +123,7 @@ export function crmContactsExcelImport(data) {
     param.append(key, data[key])
   })
   return request({
-    url: 'CrmContacts/uploadExcel',
+    url: 'crm/contacts/uploadExcel',
     method: 'post',
     data: param,
     headers: {
@@ -137,10 +137,10 @@ export function crmContactsExcelImport(data) {
  * @param {*} data
  *
  */
-export const crmContactsExcelDownloadURL = process.env.BASE_API + 'CrmContacts/downloadExcel'
+export const crmContactsExcelDownloadURL = process.env.BASE_API + 'crm/contacts/downloadExcel'
 export function crmContactsDownloadExcelAPI(data) {
   return request({
-    url: 'CrmContacts/downloadExcel',
+    url: 'crm/contacts/downloadExcel',
     method: 'post',
     data: data,
     responseType: 'blob'
@@ -153,7 +153,7 @@ export function crmContactsDownloadExcelAPI(data) {
  */
 export function crmContactsQueryListAPI(data) {
   return request({
-    url: 'CrmContacts/queryList',
+    url: 'crm/contacts/queryList',
     method: 'post',
     data: data
   })
@@ -165,7 +165,7 @@ export function crmContactsQueryListAPI(data) {
  */
 export function crmContactsRelateBusinessAPI(data) {
   return request({
-    url: 'CrmContacts/relateBusiness',
+    url: 'crm/contacts/relateBusiness',
     method: 'post',
     data: data
   })
@@ -177,7 +177,7 @@ export function crmContactsRelateBusinessAPI(data) {
  */
 export function crmContactsUnrelateBusinessAPI(data) {
   return request({
-    url: 'CrmContacts/unrelateBusiness',
+    url: 'crm/contacts/unrelateBusiness',
     method: 'post',
     data: data
   })

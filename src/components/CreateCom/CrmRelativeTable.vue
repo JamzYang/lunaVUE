@@ -330,7 +330,7 @@ export default {
             this.list = res.data.list
           }
 
-          this.totalPage = Math.ceil(res.data.totalRow / 10)
+          this.totalPage = Math.ceil(res.data.totalCount / 10)
           this.loading = false
         })
         .catch(() => {
